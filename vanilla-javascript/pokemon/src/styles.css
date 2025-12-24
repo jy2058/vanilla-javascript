@@ -107,6 +107,19 @@ a {
   background-color: var(--light-gray);
 }
 
+.pokemon-list div .pokemon-item-no {
+  color: darkgray;
+  font-size: 16px;
+}
+
+.pokemon-list div .pokemon-item-info {
+  font-weight: bold;
+}
+
+.pokemon-list div .pokemon-item-type {
+  color: white;
+  background: blue;
+}
 .pokemon-list .clicked {
   background-color: var(--light-gray);
 }
