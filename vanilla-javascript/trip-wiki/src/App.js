@@ -124,6 +124,30 @@ export default function App($app) {
     cityList.setState(this.state.cities);
   };
 
+  window.addEventListener("popstate", async () => {
+    const urlPath = window.location.pathname;
+
+    const prevRegion = urlPath.replace("/", "");
+    const prevSortBy = getSortBy();
+    const prevSearchWord = getSearchWord();
+    const prevStartIdx = 0;
+    const prevCities = await request(
+      prevStartIdx,
+      prevRegion,
+      prevSortBy,
+      prevSearchWord
+    );
+
+    this.setState({
+      ...this.state,
+      startIdx: prevStartIdx,
+      sortBy: prevSortBy,
+      region: prevRegion,
+      searchWord: prevSearchWord,
+      cities: prevCities,
+    });
+  });
+
   const init = async () => {
     const cities = await request(
       this.state.startIdx,
