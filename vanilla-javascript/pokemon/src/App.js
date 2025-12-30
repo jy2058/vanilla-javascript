@@ -18,24 +18,27 @@ export default function App($app) {
     searchWord: getSearchWord(),
     type: "",
     pokemons: "",
+    currentPage: window.location.pathname,
   };
 
   const header = new Header({
     $app,
     initialState: {
+      currentPage: this.state.currentPage,
       searchWord: this.state.searchWord,
     },
     // handleClick: async(searchWord) => {
 
     // },
     handleSearch: async (searchWord) => {
-      history.pushState(null, null, `/${this.state.type}?search=${searchWord}`);
+      history.pushState(null, null, `?search=${searchWord}`);
 
       const pokemons = await request(this.state.type, searchWord);
       this.setState({
         ...this.state,
         pokemons: pokemons,
         searchWord: searchWord,
+        currentPage: `?search=${searchWord}`,
       });
     },
   });
@@ -50,6 +53,7 @@ export default function App($app) {
     this.state = newState;
     header.setState({
       searchWord: this.state.searchWord,
+      currentPage: this.state.currentPage,
     });
     pokemonList.setState(this.state.pokemons);
   };
