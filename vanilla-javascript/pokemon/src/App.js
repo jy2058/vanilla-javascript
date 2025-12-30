@@ -3,7 +3,7 @@ import TypeList from "./components/TypeList.js";
 import PokemonList from "./components/PokemonList.js";
 import PokemonDetail from "./components/PokemonDetail.js";
 // API
-import { request } from "./components/api.js";
+import { request } from "./modules/api.js";
 
 export default function App($app) {
   const getSearchWord = () => {
