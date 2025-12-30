@@ -6,14 +6,36 @@ import PokemonDetail from "./components/PokemonDetail.js";
 import { request } from "./components/api.js";
 
 export default function App($app) {
+  const getSearchWord = () => {
+    if (window.location.search && window.location.search.includes("search=")) {
+      return window.location.search.split("search=")[1];
+    }
+    return "";
+  };
+
   this.state = {
     initialState: "",
-    searchWord: "",
+    searchWord: getSearchWord(),
     type: "",
     pokemons: "",
   };
 
-  const header = new Header();
+  const header = new Header({
+    $app,
+    initialState: {
+      searchWord: this.state.searchWord,
+    },
+    handleSearch: async (searchWord) => {
+      history.pushState(null, null, `/${this.state.type}?search=${searchWord}`);
+
+      const pokemons = await request(this.state.type, searchWord);
+      this.setState({
+        ...this.state,
+        pokemons: pokemons,
+        searchWord: searchWord,
+      });
+    },
+  });
   const pokemonList = new PokemonList({
     $app,
     initialState: this.state.pokemons,
@@ -23,8 +45,24 @@ export default function App($app) {
 
   this.setState = (newState) => {
     this.state = newState;
+    header.setState({
+      searchWord: this.state.searchWord,
+    });
     pokemonList.setState(this.state.pokemons);
   };
+
+  window.addEventListener("popstate", async () => {
+    const urlPath = window.location.pathname;
+    const prevType = urlPath.replace("/", "");
+    const prevSearchWord = getSearchWord();
+    const prevPokemons = await request(this.state.type, prevSearchWord);
+    this.setState({
+      ...this.state,
+      type: prevType,
+      searchWord: prevSearchWord,
+      pokemons: prevPokemons,
+    });
+  });
 
   const init = async () => {
     const pokemons = await request(this.state.type, this.state.searchWord);
