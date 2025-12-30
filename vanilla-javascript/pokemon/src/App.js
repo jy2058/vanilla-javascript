@@ -25,6 +25,9 @@ export default function App($app) {
     initialState: {
       searchWord: this.state.searchWord,
     },
+    // handleClick: async(searchWord) => {
+
+    // },
     handleSearch: async (searchWord) => {
       history.pushState(null, null, `/${this.state.type}?search=${searchWord}`);
 

@@ -1,3 +1,5 @@
+import { setPokemonType } from "../modules/typeTag.js";
+
 export default function PokemonList({ $app, initialState }) {
   this.state = initialState;
   this.$target = document.createElement("div");
@@ -6,16 +8,20 @@ export default function PokemonList({ $app, initialState }) {
   $app.appendChild(this.$target);
 
   this.template = () => {
-    let temp = `<div class="pokemon-items-container>`;
+    let temp = "";
     if (this.state) {
       this.state.data.forEach((elem) => {
         temp += `
-                <div class="pokemon-item" id=${elem.id}>
+            <div class="pokemon-wrapper">
+                <div class="img-wrapper" id=${elem.id}>
                     <img src="${elem.img}"></img>
-                    <div class="pokemon-item-no">No.${elem.id}</div>
-                    <div class="pokemon-item-info">${elem.name}</div>
-                    <div class="pokemon-item-type">${elem.type}</div>
                 </div>
+                <div class="pokemon-info">
+                    <div class="index">No.${elem.id}</div>
+                    <div class="name">${elem.name}</div>
+                    <div class="type">${setPokemonType(elem.type)}</div>
+                </div>
+            </div>
                 `;
       });
     }
