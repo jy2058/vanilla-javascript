@@ -1,11 +1,18 @@
 import { setPokemonType } from "../modules/typeTag.js";
 
-export default function PokemonList({ $app, initialState }) {
+export default function PokemonList({
+  $app,
+  initialState,
+  handleItemClick,
+  handleTypeClick,
+}) {
   this.state = initialState;
   this.$target = document.createElement("div");
   this.$target.className = "pokemon-list";
 
   $app.appendChild(this.$target);
+  this.handleItemClick = handleItemClick;
+  this.handleTypeClick = handleTypeClick;
 
   this.template = () => {
     let temp = "";
@@ -31,6 +38,19 @@ export default function PokemonList({ $app, initialState }) {
 
   this.render = () => {
     this.$target.innerHTML = this.template();
+
+    this.$target.querySelectorAll("div.img-wrapper").forEach((elem) => {
+      elem.addEventListener("click", () => {
+        this.handleItemClick(elem.id);
+      });
+    });
+
+    this.$target.querySelectorAll("div.type-tag").forEach((elem) => {
+      elem.addEventListener("click", () => {
+        console.log(elem);
+        this.handleTypeClick(elem.id);
+      });
+    });
   };
 
   this.setState = (newState) => {

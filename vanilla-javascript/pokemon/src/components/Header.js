@@ -23,9 +23,7 @@ export default function Header({
     if (!currentPage.includes("/detail")) {
       temp += `
         <div class="search">
-            <input type="text" placeholder="포켓몬을 검색하세요!" id="search" autocomplete="off" value=${decodeURIComponent(
-              searchWord
-            )}>
+            <input type="text" placeholder="포켓몬을 검색하세요!" id="search" autocomplete="off" value=${searchWord}>
             <button id="search-button"><img src="src/img/search.png"></img></button>
         </div>
         `;

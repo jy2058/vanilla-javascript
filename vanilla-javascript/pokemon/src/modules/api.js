@@ -1,7 +1,7 @@
 const API_URL = "https://pokemon-api-ecru-eta.vercel.app/";
 
 //LIST API
-export const request = async (type, searchWord) => {
+export async function getPokemonList(type, searchWord) {
   try {
     let url = `${API_URL}`;
     if (type && type !== "all") {
@@ -19,4 +19,12 @@ export const request = async (type, searchWord) => {
   } catch (err) {
     console.log(err);
   }
+}
+
+export const getPokemonDetail = async (id) => {
+  const url = API_URL + `detail/' + ${id}`;
+  const response = await fetch(url);
+  const pokemonDetails = await response.json();
+
+  return pokemonDetails;
 };
