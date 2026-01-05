@@ -32,7 +32,6 @@ export default function PokemonList({
                 `;
       });
     }
-    temp += `</div>`;
     return temp;
   };
 
@@ -47,7 +46,6 @@ export default function PokemonList({
 
     this.$target.querySelectorAll("div.type-tag").forEach((elem) => {
       elem.addEventListener("click", () => {
-        console.log(elem);
         this.handleTypeClick(elem.id);
       });
     });

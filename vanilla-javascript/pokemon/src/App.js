@@ -55,7 +55,6 @@ export default function App($app) {
       handleTypeClick: async (type) => {
         history.pushState(null, null, `/${type}`);
         const pokemons = await getPokemonList(type);
-        console.log("pokemon:" + pokemons);
         this.setState({
           ...this.state,
           pokemons: pokemons,
